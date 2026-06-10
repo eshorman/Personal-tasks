@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101418">
+  <title>Day Pilot</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header id="topbar">
+    <h1 id="screen-title">Today</h1>
+    <button id="btn-settings" class="icon-btn" title="Settings">⚙︎</button>
+  </header>
+
+  <main id="screens">
+
+    <!-- TODAY -->
+    <section id="screen-today" class="screen active">
+      <p id="today-date" class="muted"></p>
+      <h2>Schedule</h2>
+      <ul id="today-events" class="list"></ul>
+      <h2>Tasks</h2>
+      <ul id="today-tasks" class="list"></ul>
+      <h2>Habits</h2>
+      <ul id="today-habits" class="list"></ul>
+    </section>
+
+    <!-- TASKS -->
+    <section id="screen-tasks" class="screen">
+      <form id="task-form" class="add-row">
+        <input id="task-title" type="text" placeholder="New task…" required>
+        <input id="task-due" type="date" title="Due date (optional)">
+        <button type="submit">Add</button>
+      </form>
+      <div class="seg" id="task-filter">
+        <button data-f="open" class="on">Open</button>
+        <button data-f="today">Today</button>
+        <button data-f="done">Done</button>
+      </div>
+      <ul id="task-list" class="list"></ul>
+    </section>
+
+    <!-- PLAN -->
+    <section id="screen-plan" class="screen">
+      <form id="event-form" class="add-row wrap">
+        <input id="event-title" type="text" placeholder="Event / time block…" required>
+        <input id="event-date" type="date" required>
+        <input id="event-start" type="time">
+        <input id="event-end" type="time">
+        <button type="submit">Add</button>
+      </form>
+      <ul id="event-list" class="list"></ul>
+    </section>
+
+    <!-- NOTES -->
+    <section id="screen-notes" class="screen">
+      <form id="note-form" class="add-row">
+        <input id="note-text" type="text" placeholder="Jot something down…" required>
+        <button type="submit">Add</button>
+      </form>
+      <ul id="note-list" class="list"></ul>
+    </section>
+
+    <!-- ASSISTANT -->
+    <section id="screen-chat" class="screen">
+      <div id="chat-log"></div>
+      <p id="chat-status" class="muted"></p>
+      <form id="chat-form" class="add-row">
+        <input id="chat-input" type="text" placeholder="Ask or tell me anything…" autocomplete="off">
+        <button type="submit">Send</button>
+      </form>
+    </section>
+
+  </main>
+
+  <nav id="tabbar">
+    <button data-screen="today" class="on"><span>☀️</span>Today</button>
+    <button data-screen="tasks"><span>✓</span>Tasks</button>
+    <button data-screen="plan"><span>🗓</span>Plan</button>
+    <button data-screen="notes"><span>✎</span>Notes</button>
+    <button data-screen="chat"><span>✦</span>Assist</button>
+  </nav>
+
+  <!-- SETTINGS SHEET -->
+  <div id="settings-sheet" class="sheet hidden">
+    <div class="sheet-body">
+      <h2>Settings</h2>
+
+      <label>AI provider
+        <select id="set-provider"></select>
+      </label>
+      <p id="provider-hint" class="muted small"></p>
+
+      <label>API key
+        <input id="set-apikey" type="password" placeholder="Paste API key">
+      </label>
+
+      <label>Model
+        <input id="set-model" type="text" placeholder="(provider default)">
+      </label>
+
+      <button id="btn-save-settings" class="primary">Save</button>
+
+      <hr>
+      <h2>Habits</h2>
+      <form id="habit-form" class="add-row">
+        <input id="habit-name" type="text" placeholder="New daily habit…">
+        <button type="submit">Add</button>
+      </form>
+      <ul id="habit-list" class="list"></ul>
+
+      <hr>
+      <h2>Data</h2>
+      <div class="btn-row">
+        <button id="btn-export">Export</button>
+        <button id="btn-import">Import</button>
+        <button id="btn-clear-chat">Clear chat</button>
+      </div>
+      <input id="import-file" type="file" accept="application/json" hidden>
+
+      <button id="btn-close-settings">Close</button>
+    </div>
+  </div>
+
+  <script src="js/store.js"></script>
+  <script src="js/tools.js"></script>
+  <script src="js/providers.js"></script>
+  <script src="js/assistant.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+</html>
